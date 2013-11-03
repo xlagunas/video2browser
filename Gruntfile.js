@@ -149,7 +149,11 @@ module.exports = function (grunt) {
         httpFontsPath: '/styles/fonts',
         relativeAssets: false
       },
-      dist: {},
+      dist: {
+          options: {
+              relative_assets: true
+          }
+      },
       server: {
         options: {
           debugInfo: true
@@ -262,7 +266,19 @@ module.exports = function (grunt) {
           src: [
             'generated/*'
           ]
-        }]
+        }
+//        ,{
+//            expand: true,
+//            cwd: '<%= yeoman.app %>/bower_components/font-awesome/font',
+//            src: ['**'],
+//            dest: '<%= yeoman.dist %>/font/'
+//        ,{
+//            expand: true,
+//            cwd: '<%= yeoman.app %>/bower_components/font-awesome/font',
+//            src: ['**'],
+//            dest: '<%= yeoman.dist %>/font/'
+//        }
+        ]
       },
       styles: {
         expand: true,

@@ -1,6 +1,8 @@
 @import "bootstrap-sass/lib/bootstrap";
 
-$FontAwesomePath: "/bower_components/font-awesome/font";
+$FontAwesomePath: "/bower_components/font-awesome/fonts";
+$fa-font-path: "../bower_components/font-awesome/fonts";
+
 @import "font-awesome/scss/font-awesome";
 
 /* Put your CSS here */

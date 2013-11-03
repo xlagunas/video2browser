@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('LoginCtrl', function ($scope, $log, $http) {
+  .controller('LoginCtrl', function ($scope, $log, $http, $state) {
     $http.defaults.use
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
@@ -10,9 +10,10 @@ angular.module('video2browserApp')
     ];
     $scope.submit = function(person){
         $log.info(person);
-        $http({'method': 'POST', 'url': 'http://localhost:8080/v2b/users/create', 'data': JSON.stringify(person)}).
+        $http({'method': 'PUT', 'url': 'http://localhost:8080/v2b/users/create', 'data': JSON.stringify(person)}).
             success(function(data, status, headers, config) {
                 $log.debug("entra al success" +status)
+                $state.go("addPhoto");
                 // this callback will be called asynchronously
                 // when the response is available
             }).
@@ -20,6 +21,9 @@ angular.module('video2browserApp')
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
                 $log.debug("entra al error "+status)
+                if (status === 400){
+                    $log.debug("errorType: "+data.errorType+"\nerrorDesc: "+data.description);
+                }
             });
     }
   });

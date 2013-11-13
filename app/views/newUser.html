@@ -24,8 +24,20 @@
                     <input id="surname" class="form-control" type="text" ng-model="newUser.surname">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="pass" class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    <input id="pass" class="form-control" type="password" ng-model="newUser.password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pass-confirm" class="col-sm-3 control-label">Confirm password</label>
+                <div class="col-sm-9">
+                    <input id="pass-confirm" class="form-control" type="text" ng-model="passConfirmation">
+                </div>
+            </div>
 
-        <div class="form-group">
+            <div class="form-group">
                 <label for="submit" class="col-sm-3 control-label"></label>
                 <div class="col-sm-9">
                     <input id="submit" class="form-control btn btn-success" type="submit" name="submit">

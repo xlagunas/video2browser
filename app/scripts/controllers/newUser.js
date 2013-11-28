@@ -3,7 +3,6 @@
 angular.module('video2browserApp')
   .controller('NewuserCtrl', function ($scope, $log, $http, $state, User) {
     $scope.newUser = User.identity;
-
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -29,5 +28,21 @@ angular.module('video2browserApp')
                 });
         }
 
+    }
+    $scope.checkUsernameAvailable = function(){
+        $log.info("checking availability " +$scope.newUser.username);
+        $http({'method':'POST', 'url': 'http://localhost:8080/v2b/users/register', 'data': $scope.newUser.username})
+            .success(function(data){
+                $scope.availability = data;
+                $log.info("Request response: "+$scope.availability);
+            })
+            .error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                $log.debug("entra al error "+status)
+                if (status === 400){
+                    $log.debug("errorType: "+data.errorType+"\nerrorDesc: "+data.description);
+                }
+            });
     }
   });

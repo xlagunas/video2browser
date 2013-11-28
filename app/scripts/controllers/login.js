@@ -24,11 +24,7 @@ $scope.submit = function(login){
                     $log.debug("errorType: "+data.errorType+"\nerrorDesc: "+data.description);
                 }
             });
-    }
-
-$scope.checkUsername = function(username){
-    $log.info("checking" +username);
-}
+    };
 
 });
 

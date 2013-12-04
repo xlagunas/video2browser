@@ -2,6 +2,6 @@
 
 angular.module('video2browserApp')
   .controller('MainCtrl', function ($scope, User) {
-        $scope.identity = User.identity;
-        $scope.contacts = User.contacts;
+        $scope.identity = User.getIdentity();
+        $scope.contacts = User.getContacts();
   });

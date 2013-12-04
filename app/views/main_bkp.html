@@ -1,0 +1,11 @@
+<div class="hero-unit">
+  Welcome: {{identity.username}} !!
+  welcome: <contact user="identity"></contact>!!
+
+  <i class="fa fa-cloud"></i> fa-cloud
+  <i class="fa fa-cloud"></i> fa-cloud
+
+  <a class="btn btn-default" href="#new-user">New User</a>
+    total located users: {{contacts.length}}
+    <contact ng-repeat="contact in contacts" user="contact"></contact>
+</div>

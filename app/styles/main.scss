@@ -1,12 +1,11 @@
 @import "bootstrap-sass/lib/bootstrap";
 
-$FontAwesomePath: "/bower_components/font-awesome/fonts";
+//$FontAwesomePath: "/bower_components/font-awesome/fonts";
 $fa-font-path: "../bower_components/font-awesome/fonts";
 
 @import "font-awesome/scss/font-awesome";
-
 /* Put your CSS here */
-html, body {
+/*html, body {
   margin: 20px;
 }
 
@@ -14,7 +13,7 @@ body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
-}
+} */
 
 .hero-unit {
     margin: 50px auto 0 auto;
@@ -31,4 +30,124 @@ body {
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
+}
+
+html,body {
+  height: 100%;
+  width: 100%;
+  background-color: #e8fcf4;
+}
+.full-height{
+  min-height: 100%;
+  height: 100% ;
+  margin: 0;
+
+}
+.right-menu{
+  /*background-color: #25ad87;*/
+  background-color: #4b6163;
+  height: 50%;
+  /*overflow-y: auto;*/
+}
+
+.left-menu{
+  /*background-color: #28bd93;*/
+  background-color: #4b6163;
+  /*background-image: url("images/textured_paper.png");*/
+  height: 50%;
+  /*color: #8699a4;*/
+
+}
+.white-font{
+  color: white;
+}
+
+.active-list-item{
+  background-color: #333333;
+}
+
+.list-unstyled li a{
+  color: white;
+}
+
+.list-unstyled li a:hover{
+  background-color: #101010;
+  color: #333;
+}
+.list-item:first-of-type{
+  margin: 0px;
+}
+.list-item{
+  margin-left: 4%;
+}
+.list-sub-item{
+  margin-left: 8%;
+}
+nav{
+  /*background-color: #4b6163!important;*/
+  background-color: #25ad87!important;
+}
+nav p{
+  color: white!important;
+}
+nav p a {
+  color: white!important;
+}
+.main-content{
+}
+
+.item-option{
+  background-color: lightseagreen;
+}
+
+.presence-img{
+  max-height: 30px;
+}
+.no-padding{
+  padding: 0!important;
+}
+.no-margin{
+  margin: 0!important;
+}
+.lateral-margin{
+  margin: 0 2% 0 2%;
+}
+.available{
+  border-color: limegreen;
+  border-bottom-width: 5px!important;
+  border-style: inset;
+}
+.busy{
+  border-color: indianred;
+  border-bottom-width: 5px!important;
+  border-style: inset;
+}
+.away{
+  border-color: yellow;
+  border-bottom-width: 5px!important;
+  border-style: inset;
+}
+.offline{
+  border-color: lightgray;
+  border-bottom-width: 5px!important;
+  border-style: inset;
+}
+.contact-card{
+  padding-top: 5%!important;
+  padding-bottom: 5%;
+  margin: 0px;
+  background-color: rgb(125, 207, 109);
+  margin: 5px;
+  border-radius: 4px;
+}
+.contact-list{
+  height: 88%;
+  overflow-y: auto;
+  padding-top: 2%;
+}
+.contact-header{
+  height: 12%;
+}
+table tbody tr:hover{
+  cursor: pointer;
 }

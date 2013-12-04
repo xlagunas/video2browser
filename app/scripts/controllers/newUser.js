@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('NewuserCtrl', function ($scope, $log, $http, $state, User) {
+  .controller('NewUserCtrl', function ($scope, $log, $http, $state, User) {
     $scope.newUser = User.identity;
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

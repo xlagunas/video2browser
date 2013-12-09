@@ -7,6 +7,12 @@ angular.module('video2browserApp')
 
 
         return {
+             'queryIdentity': function(){
+                 $http({'method': 'GET', 'url':'/v2b/users/'});
+             },
+             'queryContacts': function(){
+                 $http({'method': 'POST', 'url': '/v2b/users/list', 'data': identity});
+             },
              'getIdentity': function(){return identity},
              'getContacts': function(){return contacts},
              'getContactByUsername' : function(username){

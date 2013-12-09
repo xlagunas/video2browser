@@ -19,7 +19,7 @@
                     <div class="input-group lateral-margin" >
                         <input type="text" ng-model="userTextBox.username" class="form-control" placeholder="Filtra o Afegeix Usuaris">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" ng-disabled="{{ (contacts|filter:userTextBox).length >0  }}" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button class="btn btn-default" ng-disabled="(contacts|filter:userTextBox).length > 0 " type="button"><span class="glyphicon glyphicon-plus"></span></button>
                           </span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->

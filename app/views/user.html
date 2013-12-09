@@ -1,0 +1,25 @@
+<!--<p>This is the user view.</p>-->
+<!--{{user.username}} {{user.name}} {{user.middlename}}-->
+
+<div class="row no-margin">
+    <div id="contactImage" class="col-md-3" style="text-align:center;">
+        <div class="row">
+            <img class="img-thumbnail" width="140px" ng-src="http://localhost:8080/v2b/resources/img/{{user.thumbnail}}">
+
+        </div>
+        <div class="row">
+            <button class="btn btn-default" ng-click="createRoom('VIDEO')">
+                <span class="glyphicon glyphicon-facetime-video"></span>
+            </button>
+            <button class="btn btn-default" ng-click="createRoom('AUDIO')"><span class="glyphicon glyphicon-volume-down"></span></button>
+            <button class="btn btn-default" ng-click="toggleMessagePanel()">
+                <span class="glyphicon glyphicon-envelope"></span>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <h3><p class="lead">{{user.name}} {{user.middlename}} {{user.surname}}</p></h3>
+        ({{user.username}})
+        <a href="#"><img src="./images/status_{{user.status | lowercase }}.png"/> {{user.status | lowercase}}</a></li>
+    </div>
+</div>

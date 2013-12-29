@@ -1,0 +1,9 @@
+<p>This is the management view.</p>
+     <div class="row text-center">
+         <div ng-repeat="friendship in pending">
+             <img ng-src="http://localhost:8080/v2b/resources/img/{{friendship.proposer.thumbnail}}">
+             <p>{{friendship.proposer.name}} {{friendship.proposer.middlename}} {{friendship.proposer.surname}}</p>
+             <button class="btn btn-success" ng-click="accept(friendship)">Add</button>
+             <button class="btn btn-warning" ng-click="reject(friendship)">Remove</button>
+        </div>
+    </div>

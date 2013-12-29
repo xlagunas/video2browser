@@ -5,21 +5,17 @@
     <div id="contactImage" class="col-md-3" style="text-align:center;">
         <div class="row">
             <img class="img-thumbnail" width="140px" ng-src="http://localhost:8080/v2b/resources/img/{{user.thumbnail}}">
-
         </div>
         <div class="row">
-            <button class="btn btn-default" ng-click="createRoom('VIDEO')">
-                <span class="glyphicon glyphicon-facetime-video"></span>
-            </button>
-            <button class="btn btn-default" ng-click="createRoom('AUDIO')"><span class="glyphicon glyphicon-volume-down"></span></button>
-            <button class="btn btn-default" ng-click="toggleMessagePanel()">
-                <span class="glyphicon glyphicon-envelope"></span>
-            </button>
+            <button class="btn btn-default" ng-click="createRoom('VIDEO')"><i class="fa fa-video-camera"></i></button>
+            <button class="btn btn-default" ng-click="createRoom('AUDIO')"><i class="fa fa-volume-up"></i></button>
+            <button class="btn btn-default" ng-click="toggleMessagePanel()"><i class="fa fa-envelope"></i></button>
         </div>
     </div>
     <div class="col-md-9">
         <h3><p class="lead">{{user.name}} {{user.middlename}} {{user.surname}}</p></h3>
         ({{user.username}})
         <a href="#"><img src="./images/status_{{user.status | lowercase }}.png"/> {{user.status | lowercase}}</a></li>
+        <a ng-show="{{user == identity}}" class="btn btn-default" href="/v2b/logout">Log out</a>
     </div>
 </div>

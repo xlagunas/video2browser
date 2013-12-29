@@ -3,52 +3,40 @@
 angular.module('video2browserApp', ['ui.router'])
   .config(function ($stateProvider, $urlRouterProvider, $sceDelegateProvider, $httpProvider) {
         $stateProvider
-            .state('home',{'url': '/' ,'templateUrl': 'views/main.html', 'controller': 'MainCtrl'
-//                , 'resolve': {
-////                    loggedUser: function($http){
-////                        console.log("Loading via loggedUser!");
-////                        return $http({'method': 'GET', 'url': 'http://localhost:8080/v2b/users/'})
-////                    }
-//                    promiseObj:  function($http){
-//                        // $http returns a promise for the url data
-//                        return $http({method: 'GET', url: 'http://localhost:8080/v2b/users/'});
-//                    }
-//                }
-    } )
-            .state('home.mail', {'url':'/mail',templateUrl: 'views/mail.html', controller: 'MailCtrl',
-                'resolve': {
-//                    loggedUser: function($http){
-//                        console.log("Loading via loggedUser!");
-//                        return $http({'method': 'GET', 'url': 'http://localhost:8080/v2b/users/'})
-//                    }
-            promiseObj:  function($http){
-                // $http returns a promise for the url data
-                return $http({method: 'GET', url: 'http://localhost:8080/v2b/users/'});
-            }
-        }})
+            .state('home',{'url': '/'})
+            .state('mail', {'url':'/mail',templateUrl: 'views/mail.html', controller: 'MailCtrl'})
             .state('addPhoto', {'url':'/add-photo',templateUrl: 'views/addPhoto.html', controller: 'AddphotoCtrl'})
-            .state('newUser', {'url':'/new-user',templateUrl: 'views/newUser.html', controller: 'NewuserCtrl'})
-            .state('home.user', {'url':'/user/{username}',templateUrl: 'views/user.html', controller: 'UserCtrl'})
+            .state('newUser', {'url':'/new-user',templateUrl: 'views/newUser.html', controller: 'NewUserCtrl'})
+            .state('user', {'url':'/user/{username}',templateUrl: 'views/user.html', controller: 'UserCtrl'})
+            .state('conference', {'url':'/conference/{roomId}',templateUrl: 'views/conference.html', controller: 'ConferenceCtrl'})
+            .state('management', {'url':'/management',templateUrl: 'views/management.html',
+                controller: 'ManagementCtrl',
+                resolve: {
+                    pending: function($http, User){
+                        return $http({'method': 'GET', 'url': '../relationships/requested/'+User.getIdentity().idUser})
+                    }}
+            })
+            .state('candidates', {'url':'/candidates/{keyword}',templateUrl: 'views/candidates.html',
+                controller: 'CandidatesCtrl',
+                resolve: {
+                    candidates: function($http, User, $stateParams){
+                        return $http({'method': 'POST', 'url': '../users/search/'+$stateParams.keyword,
+                            'data': User.getIdentity()})
+                    }
+                }
+            });
+
         $urlRouterProvider.otherwise('/');
-        $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(cdn\.)?vb2.i2ca.net/]);
+        $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(cdn\.)?vb2.i2cat.net/]);
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/json' ;
 
 
     })
-    .run(function(User, $http, $log){
+    .run(function($log, Websocket){
         $log.debug("Entra al run");
-//        $http.get("http://localhost:8080/v2b/users/").then(function(response){
-//            User.setIdentity(response.data);
-//            $log.info(response);
-//
-//        });
 
-//        $http.post('http://localhost:8080/v2b/users/list', User.getIdentity()).then(function(response){
-//            $apply(function(){
-//                User.setContacts(response.data);
-//                $log.info(response);
-//            });
-//
-//        })
-
+        window.onbeforeunload = function(event){
+            console.log("loading the onbeforeUnload method");
+            Websocket.close();
+        }
     });

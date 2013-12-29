@@ -11,7 +11,7 @@ angular.module('video2browserApp')
     $scope.submit = function(person){
         $log.info(person);
         if ($scope.passConfirmation === person.password){
-            $http({'method': 'PUT', 'url': 'http://localhost:8080/v2b/users/create', 'data': JSON.stringify(person)}).
+            $http({'method': 'PUT', 'url': '../users/create', 'data': JSON.stringify(person)}).
                 success(function(data, status, headers, config) {
                     $log.debug("entra al success" +status)
                     $state.go("addPhoto");
@@ -31,7 +31,7 @@ angular.module('video2browserApp')
     }
     $scope.checkUsernameAvailable = function(){
         $log.info("checking availability " +$scope.newUser.username);
-        $http({'method':'POST', 'url': 'http://localhost:8080/v2b/users/register', 'data': $scope.newUser.username})
+        $http({'method':'POST', 'url': '../users/register', 'data': $scope.newUser.username})
             .success(function(data){
                 $scope.availability = data;
                 $log.info("Request response: "+$scope.availability);

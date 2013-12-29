@@ -44,15 +44,14 @@ html,body {
 
 }
 .right-menu{
-  /*background-color: #25ad87;*/
-  background-color: #4b6163;
+  background-color: #28bd93;
   height: 50%;
   /*overflow-y: auto;*/
 }
 
 .left-menu{
-  /*background-color: #28bd93;*/
-  background-color: #4b6163;
+  background-color: #28bd93;
+  //background-color: #4b6163;
   /*background-image: url("images/textured_paper.png");*/
   height: 50%;
   /*color: #8699a4;*/
@@ -84,8 +83,8 @@ html,body {
   margin-left: 8%;
 }
 nav{
-  /*background-color: #4b6163!important;*/
-  background-color: #25ad87!important;
+  background-color: teal!important;
+  //background-color: #25ad87!important;
 }
 nav p{
   color: white!important;
@@ -133,8 +132,10 @@ nav p a {
   border-style: inset;
 }
 .contact-card{
-  padding-top: 5%!important;
-  padding-bottom: 5%;
+  //padding-top: 5%!important;
+  //padding-bottom: 5%;
+  padding-top: 0%!important;
+  padding-bottom: 0%;
   margin: 0px;
   background-color: rgb(125, 207, 109);
   margin: 5px;

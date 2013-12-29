@@ -1,16 +1,15 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('MainCtrl', function ($scope, $http, $log, User) {
-//        User.setIdentity(loggedUser.data);
+  .controller('MainCtrl', function ($scope, User, $state, $log, Websocket, $window) {
+    User.init();
 
-//        $http.post('http://localhost:8080/v2b/users/list', User.getIdentity()).then(function(response){
-//            $apply(function(){
-//                User.setContacts(response.data);
-//                $log.info(response);
-//            });
-//        })
+    $scope.identity = User.getIdentity();
+    $scope.contacts = User.getContacts();
 
-        $scope.identity = User.getIdentity();
-        $scope.contacts = User.getContacts();
+    $scope.findCandidates = function(keyword){
+        $log.info(keyword);
+        $state.go("candidates", {'keyword':keyword});
+    }
+
   });

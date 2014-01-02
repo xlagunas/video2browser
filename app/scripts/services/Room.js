@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .service('Room', function Room($log, $state, $rootScope) {
+  .service('Room', function Room($log, $state, $rootScope, $modal, $modalStack) {
         var servers = {
             "iceServers" : [
                 {'url' : 'stun:stun.l.google.com:19302'},
@@ -86,7 +86,7 @@ angular.module('video2browserApp')
             'getRemoteStreams': function(){return remoteStreams;},
             'getLocalStream' : function () {return localStream;},
             'getRoom' : function() { return room; },
-            'setRoom' : function(newRoom){angular.copy(newRoom,room);},
+            'setRoom' : function(newRoom){$log.debug("Entro al setRoom");$log.debug(newRoom);angular.copy(newRoom,room);},
             'goToRoom' : function(){
                 switch(room.roomType){
                     case 'VIDEO':
@@ -101,22 +101,47 @@ angular.module('video2browserApp')
                 }
                 $state.go('conference');
             },
-//            'setPeers' : function(room){
-//
-//            },
             'handleMessage': function(msg){
                 switch (msg.method){
                     case "CALL_CREATE":
-                        this.setRoom(msg.content);
-                        this.goToRoom();
                         break;
                     case "CALL_INVITE":
                         this.setRoom(msg.content);
+                        $modal.open({'templateUrl':'views/modal.html', 'controller': 'ModalCalleeCtrl',
+                            'resolve' : {
+                                callType: function () {return msg.content.roomType},
+                                sender: function(){ return msg.sender}
+                            }
+                        }).result.then(
+                                function(cb){
+                                    return function(returnValue){
+                                        $log.info("__asdasdas");
+                                        $log.info(returnValue);
+                                        $log.info("asdasdas__");
+                                        var msg = {};
+                                        msg.header = "CALL";
+                                        msg.method = "CALL_ACCEPT";
+                                        msg.content = cb.getRoom();
+                                        msg.receiver = returnValue.username;
+                                        $rootScope.$broadcast("send_WS", msg);
+
+                                        cb.goToRoom();
+                                    }
+                                }(this), function(){
+                                    $log.info("cancelled call");
+                                }
+                            );
+                        break;
+                    case "CALL_ACCEPT":
+                        $log.debug("Rebo un CALL_ACCEPT");
+                        $rootScope.$broadcast("close_popup", "");
+                        this.setRoom(msg.content);
                         this.goToRoom();
                         break;
-//                    case "CALL_JOIN":
-//                         this.setPeers(msg.content);
-//                        break;
+                    case "CALL_REJECT":
+                        $log.debug("Rebo un CALL_REJECT");
+                        $rootScope.$broadcast("close_popup", "");
+                        break;
                     default:
                         $log.info("Entra al default del handleMessage");
                         break;

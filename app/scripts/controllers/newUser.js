@@ -45,4 +45,11 @@ angular.module('video2browserApp')
                 }
             });
     }
+
+//        $scope.$on("myEvent", function(event, msg){
+//            $log.debug("************rebo un msg via event newUser");
+//            $log.debug(msg);
+//            $log.debug("************rebo un msg via event newUser");
+//
+//        });
   });

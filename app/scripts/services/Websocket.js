@@ -4,7 +4,6 @@ angular.module('video2browserApp')
   .service('Websocket', function Websocket($log, User, $rootScope, Room) {
         var protocols = ['websocket', 'xdr-streaming', 'xhr-streaming', 'iframe-eventsource', 'iframe-htmlfile',
             'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling' ];
-//        var protocols = ['websocket'];
 
         var sock = new SockJS("http://localhost:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
 
@@ -13,7 +12,7 @@ angular.module('video2browserApp')
         sock.onmessage = function(e){
             console.log("message des d'angular: ",e.data);
             var msg = JSON.parse(e.data);
-            $log.debug(msg);
+
             switch(msg.header)
             {
                 case "ROSTER":
@@ -93,7 +92,9 @@ angular.module('video2browserApp')
                                     sock.send(JSON.stringify(msg));
                                     peer.setLocalDescription(sessionDescription);
                                 },
-                                null,
+                                function(callbackFailure){
+                                    $log.info("Error al createAnswer");
+                                },
                                 {'mandatory':
                                     {'OfferToReceiveAudio':Room.getUsersConstraints().audio,
                                      'OfferToReceiveVideo': Room.getUsersConstraints().video
@@ -130,21 +131,27 @@ angular.module('video2browserApp')
             console.log("tancat");
         };
 
-//        window.onbeforeunload = function(e){
-//            console.log("onbeforeunload");
-//            sock.close();
-//        };
+        sock.send_msg = function(message){
+            message.sender = User.getIdentity().username;
+            $log.warn(message);
+            sock.send(JSON.stringify(message));
+        }
 
-//        $rootScope.$on("closeState", function(){
-//            $log.info("Rebo el event emes");
-//            sock.close();
-//        })
+        $rootScope.$on("send_WS", function(event, message){
+           $log.debug("Detecto event d'enviament de missatge");
+           $log.debug(message);
+           $log.debug("___________")
+            sock.send_msg(message);
+        });
+
         return {
             socket: sock,
-            send: function(message){
-                message.sender = User.getIdentity().username;
-                sock.send(JSON.stringify(message));
-            },
+//            send: function(message){
+//                message.sender = User.getIdentity().username;
+//                $log.warn(message);
+//                sock.send(JSON.stringify(message));
+//            },
+            send: sock.send_msg,
             sendMsg2: function(typeMsg, contact){
                 console.log("Type_MSG: "+typeMsg+"User: "+contact);
                 console.log("Type_MSG: "+typeMsg+"User: "+contact);

@@ -15,6 +15,7 @@ body {
     color: #333;
 } */
 
+
 .hero-unit {
     margin: 50px auto 0 auto;
     width: 300px;
@@ -151,4 +152,10 @@ nav p a {
 }
 table tbody tr:hover{
   cursor: pointer;
+}
+
+.nav, .pagination, .carousel a { cursor: pointer; }
+
+.localStream{
+  border-radius: 25px;
 }

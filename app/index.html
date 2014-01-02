@@ -57,7 +57,7 @@
                     </div><!-- /.col-lg-6 -->
                 </div>
                 <ul class="list-unstyled contact-list">
-                    <li ng-repeat="contact in contacts| filter:userTextBox" ng-click="selectContact(contact)">
+                    <li ng-repeat="contact in contacts| filter:userTextBox" ng-click="selectContact(contact)" draggable="true">
                         <a ui-sref="user({username: contact.username})">
                             <div class="media contact-card">
                                 <img height="45px" class="pull-left media-object {{contact.status | lowercase}}" src="/v2b/resources/img/default_avatar.png" alt="{{contact.name}}">
@@ -98,10 +98,12 @@
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/sockjs/sockjs.js"></script>
-    <!--<script src="bower_components/angular-route/angular-route.js"></script>-->
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
-        <!-- build:js scripts/plugins.js -->
+
+    <!-- build:js scripts/plugins.js -->
         <script src="bower_components/bootstrap-sass/js/affix.js"></script>
         <script src="bower_components/bootstrap-sass/js/alert.js"></script>
         <script src="bower_components/bootstrap-sass/js/dropdown.js"></script>
@@ -129,6 +131,8 @@
         <script src="scripts/controllers/conference.js"></script>
         <script src="scripts/controllers/mail.js"></script>
         <script src="scripts/controllers/user.js"></script>
+        <script src="scripts/controllers/modalCallee.js"></script>
+        <script src="scripts/controllers/modalCaller.js"></script>
         <script src="scripts/directives/capture.js"></script>
         <script src="scripts/directives/contact.js"></script>
         <script src="scripts/filters/contactFilter.js"></script>

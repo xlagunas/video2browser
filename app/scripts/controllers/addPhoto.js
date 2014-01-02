@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('AddphotoCtrl', function ($scope, $log, $rootScope, $sce) {
+  .controller('AddPhotoCtrl', function ($scope, $log, $rootScope, $sce) {
 
      $scope.localMediaStream = {};
 

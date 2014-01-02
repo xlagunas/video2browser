@@ -1,12 +1,14 @@
-<button class="btn btn-default" ng-click="createRoom()">Crear Sala</button>
-<input class="col-md-5" ng-model="room.id" placeholder="Nom de la Sala">
+<!--<button class="btn btn-default" ng-click="createRoom()">Crear Sala</button>-->
+<!--<input class="col-md-5" ng-model="room.id" placeholder="Nom de la Sala">-->
 <!--<button class="btn btn-default" ng-click="initMedia()">InitMedia()</button>-->
 <!--<button class="btn btn-default" ng-click="joinRoom()">joinRoom()</button>-->
-<input type="text" ng-model="inviteUser">
-<button class="btn btn-default" ng-click="invite()">Invita</button>
-<button type="text" ng-click="close()">Tancar</button>
-total remoteStreams : {{remoteStreams.length}}
-url: {{localStream.url}}
-conferencia tipus: {{room.roomType}}
-<video ng-src="{{trustSrc(localStream.url)}}" autoplay></video>
-<video ng-repeat="stream in remoteStreams" ng-src="{{trustSrc(stream.url)}}" autoplay></video>
+<!--<input type="text" ng-model="inviteUser">-->
+<!--<button class="btn btn-default" ng-click="invite()">Invita</button>-->
+<!--<button type="text" ng-click="close()">Tancar</button>-->
+<!--total remoteStreams : {{remoteStreams.length}}-->
+<!--url: {{localStream.url}}-->
+<!--conferencia tipus: {{room.roomType}}-->
+<div onDrop="return console.log('entra onDrop')">
+    <video class="localStream" ng-src="{{trustSrc(localStream.url)}}" autoplay></video>
+    <video ng-repeat="stream in remoteStreams" ng-src="{{trustSrc(stream.url)}}" autoplay></video>
+</div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('UserCtrl', function ($scope, $stateParams,$log, User, Websocket) {
+  .controller('UserCtrl', function ($scope, $stateParams,$log, User, $modal, Websocket) {
      var identity = User.getIdentity();
 
      if ($stateParams.username == identity.username){
@@ -13,6 +13,7 @@ angular.module('video2browserApp')
 
     $scope.identity = identity;
 
+
     $scope.createRoom = function(roomType){
         var msg = {};
         msg.header = 'CALL';
@@ -20,6 +21,7 @@ angular.module('video2browserApp')
         msg.receiver = $scope.user.username;
         msg.content = {};
         msg.content.roomType = roomType;
+        $modal.open({'templateUrl': 'views/modalWaiting.html', 'controller':'ModalCallerCtrl'});
 
         Websocket.send(msg);
 

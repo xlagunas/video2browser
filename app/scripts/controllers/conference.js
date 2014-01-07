@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('ConferenceCtrl', function ($scope, $log, Room, $sce, $rootScope, $stateParams, Websocket){
+  .controller('ConferenceCtrl', function ($scope, $log, Room, $sce, $rootScope, $stateParams, Websocket, $modal){
         $scope.room             = Room.getRoom();
         $scope.localStream      = Room.getLocalStream();
         $scope.remoteStreams    = Room.getRemoteStreams();
@@ -49,9 +49,16 @@ angular.module('video2browserApp')
             }
         );
 
-//        $scope.$on('WebSocketSend',function(data){
-//            $log.info("rebo data del event");
-//            $log.info(data);
-//            Websocket.send(data);
-//        })
+        $rootScope.$on("drop_user", function(event, message){
+            $log.debug("Detecto event d'enviament de missatge");
+            $log.debug(message);
+            $modal.open({
+                'templateUrl': 'views/modalInvite.html',
+                'controller' : 'ModalInviteCtrl',
+                'resolve' : {
+                    'username': function() {return message}
+                }
+            })
+            $log.debug("___________")
+        });
   });

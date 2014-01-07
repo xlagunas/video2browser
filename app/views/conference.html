@@ -8,7 +8,7 @@
 <!--total remoteStreams : {{remoteStreams.length}}-->
 <!--url: {{localStream.url}}-->
 <!--conferencia tipus: {{room.roomType}}-->
-<div onDrop="return console.log('entra onDrop')">
+<div droppable>
     <video class="localStream" ng-src="{{trustSrc(localStream.url)}}" autoplay></video>
     <video ng-repeat="stream in remoteStreams" ng-src="{{trustSrc(stream.url)}}" autoplay></video>
 </div>

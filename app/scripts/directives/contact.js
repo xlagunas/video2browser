@@ -1,12 +1,19 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .directive('contact', function () {
+  .directive('contact', function ($log) {
     return {
       scope: {
           user: "="
           },
       restrict: 'E',
-      template: '<div>{{user.username}}:{{user.name}}_{{user.middlename}}_{{user.surname}}<div>{{user.thumbnail}}</div><div>{{user.status}}</div></div>'
+      templateUrl: 'views/contact.html',
+      link: function(scope, element, attrs){
+          element.bind("dragstart", function(event){
+              $log.info(event);
+              console.log("dragstart "+scope.user.username);
+              event.originalEvent.dataTransfer.setData("Text",scope.user.username);
+          });
+      }
     };
   });

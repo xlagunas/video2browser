@@ -6,7 +6,7 @@ angular.module('video2browserApp')
      $scope.localMediaStream = {};
 
      $scope.initMedia = function(){
-         var userMedia = getUserMedia({'video':true, 'audio': false},function(localMediaStream){
+         var userMedia = getUserMedia({'video':true, 'audio': true},function(localMediaStream){
                  window.URL = window.URL || window.webkitURL;
                  $scope.localMediaStream.url= window.URL.createObjectURL(localMediaStream);
                  $rootScope.$apply();

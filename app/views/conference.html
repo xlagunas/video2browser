@@ -9,6 +9,7 @@
 <!--url: {{localStream.url}}-->
 <!--conferencia tipus: {{room.roomType}}-->
 <div droppable>
-    <video class="localStream" ng-src="{{trustSrc(localStream.url)}}" autoplay></video>
+    <li ng-repeat="user in peers">{{user.usernameId}}</li>
+    <video class="localStream" ng-src="{{trustSrc(localStream.url)}}" autoplay muted></video>
     <video ng-repeat="stream in remoteStreams" ng-src="{{trustSrc(stream.url)}}" autoplay></video>
 </div>

@@ -6,7 +6,7 @@ angular.module('video2browserApp')
         $scope.localStream      = Room.getLocalStream();
         $scope.remoteStreams    = Room.getRemoteStreams();
         $scope.inviteUser;
-
+        $scope.peers = Room.getPeers;
         $scope.close = function(){
             console.log("Cleaning up!");
             Room.closePeerConnections();
@@ -37,21 +37,9 @@ angular.module('video2browserApp')
             Websocket.send(joinMsg);
         };
 
-        Room.initMedia(
-            function(){
-                $log.info(Room.getRoom());
-                var joinMsg = {};
-                joinMsg.header      = "CALL";
-                joinMsg.method      = "CALL_JOIN"
-                joinMsg.content     = {};
-                joinMsg.content.id  = Room.getRoom().id;
-                Websocket.send(joinMsg);
-            }
-        );
+        Room.initMedia();
 
         $rootScope.$on("drop_user", function(event, message){
-            $log.debug("Detecto event d'enviament de missatge");
-            $log.debug(message);
             $modal.open({
                 'templateUrl': 'views/modalInvite.html',
                 'controller' : 'ModalInviteCtrl',
@@ -59,6 +47,5 @@ angular.module('video2browserApp')
                     'username': function() {return message}
                 }
             })
-            $log.debug("___________")
         });
   });

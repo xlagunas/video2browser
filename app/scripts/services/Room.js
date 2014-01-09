@@ -15,7 +15,6 @@ angular.module('video2browserApp')
         var localStreamObject = {};
         var peerConnection = [];
         var remoteStreams = [];
-//        var conferenceService = {};
         var localStream = {};
         var userConstraints = {};
         var room = {};
@@ -69,15 +68,42 @@ angular.module('video2browserApp')
                 }
                 return undefined;
             },
-            'initMedia' : function(callback){
+            'initMedia' : function(){
+                $log.debug(userConstraints);
                 userMedia = getUserMedia(userConstraints,
                     function(localMediaStream){
-                        window.URL = window.URL || window.webkitURL;
-                        localStreamObject = localMediaStream;
-                        localMediaStream.url= window.URL.createObjectURL(localMediaStream);
-                        angular.copy(localMediaStream, localStream);
-                        callback();
+                        return function(cb){
+                            window.URL = window.URL || window.webkitURL;
+                            localStreamObject = localMediaStream;
+                            localMediaStream.url= window.URL.createObjectURL(localMediaStream);
+                            angular.copy(localMediaStream, localStream);
+                            $log.info(cb);
+                            var joinMsg = {};
+                            joinMsg.header      = "CALL";
+                            joinMsg.method      = "CALL_JOIN"
+                            joinMsg.content     = {};
+                            joinMsg.content.id  = room.id;
+                            $rootScope.$emit("send_WS",joinMsg);
+
+
                         $rootScope.$apply();
+                        }(Room)
+//                        window.URL = window.URL || window.webkitURL;
+//                        localStreamObject = localMediaStream;
+//                        localMediaStream.url= window.URL.createObjectURL(localMediaStream);
+//                        angular.copy(localMediaStream, localStream);
+//                        //cb();
+//                        $log.info(room);
+//                        var joinMsg = {};
+//                        joinMsg.header      = "CALL";
+//                        joinMsg.method      = "CALL_JOIN"
+//                        joinMsg.content     = {};
+//                        joinMsg.content.id  = room.id;
+//
+//                        $rootScope.$emit("send_WS",joinMsg);
+
+
+//                        $rootScope.$apply();
                     },
                     function(err){
                         console.log("initMedia error "+err);
@@ -134,9 +160,11 @@ angular.module('video2browserApp')
                         break;
                     case "CALL_ACCEPT":
                         $log.debug("Rebo un CALL_ACCEPT");
-                        $rootScope.$broadcast("close_popup", "");
-                        this.setRoom(msg.content);
-                        this.goToRoom();
+//                        if (msg.content.users == null){
+                            $rootScope.$broadcast("close_popup", "");
+                            this.setRoom(msg.content);
+                            this.goToRoom();
+//                        }
                         break;
                     case "CALL_REJECT":
                         $log.debug("Rebo un CALL_REJECT");
@@ -146,6 +174,7 @@ angular.module('video2browserApp')
                         $log.info("Entra al default del handleMessage");
                         break;
                 }
-            }
+            },
+            'getPeers': function(){ return peerConnection}
         }
     });

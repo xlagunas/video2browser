@@ -14,12 +14,34 @@ angular.module('video2browserApp')
         msg.header          = "CALL"
         msg.method          = 'CALL_INVITE'
         msg.content         = $scope.room;
-        //msg.content.users = [];
-        //msg.content.users.push($scope.contact.username);
         msg.receiver        = $scope.contact.username
         $log.debug(msg);
         Websocket.send(msg);
         $modalInstance.close($scope.contact);
+
+        $modal.open({
+            'templateUrl': 'views/modalWaiting.html',
+            'controller' : 'ModalCallerCtrl'
+        })
+//            .result.then(
+//            function(cb){
+//                return function(returnValue){
+//                    $log.info("__asdasdas");
+//                    $log.info(returnValue);
+//                    $log.info("asdasdas__");
+//                    var msg = {};
+//                    msg.header = "CALL";
+//                    msg.method = "CALL_ACCEPT";
+//                    msg.content = cb.getRoom();
+//                    msg.receiver = returnValue.username;
+//                    $rootScope.$broadcast("send_WS", msg);
+//
+//                    cb.goToRoom();
+//                }
+//            }(this), function(){
+//                $log.info("cancelled call");
+//            }
+//        );
     }
 
     $scope.cancel = function(){

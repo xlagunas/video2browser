@@ -1,12 +1,19 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('ConferenceCtrl', function ($scope, $log, Room, $sce, $rootScope, $stateParams, Websocket, $modal){
+  .controller('ConferenceCtrl', function ($scope, $log, Room, $rootScope, $stateParams, Websocket, $modal, User, $sce){
         $scope.room             = Room.getRoom();
         $scope.localStream      = Room.getLocalStream();
         $scope.remoteStreams    = Room.getRemoteStreams();
         $scope.inviteUser;
         $scope.peers = Room.getPeers;
+
+        $scope.size = {width: 640/$scope.remoteStreams.length, height: 480/$scope.remoteStreams.length }
+
+        $scope.getPeerContact = function(username){
+            $log.info("requesting contact info: "+username);
+            return User.getContactByUsername(username);
+        }
         $scope.close = function(){
             console.log("Cleaning up!");
             Room.closePeerConnections();
@@ -24,9 +31,6 @@ angular.module('video2browserApp')
             Websocket.send(msg2);
         }
 
-        $scope.trustSrc = function(src) {
-            return $sce.trustAsResourceUrl(src);
-        };
 
         $scope.joinRoom = function(){
             var joinMsg = {};

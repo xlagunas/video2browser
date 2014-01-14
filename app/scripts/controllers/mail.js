@@ -1,8 +1,12 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('MailCtrl', function ($scope, $modal, $log, $rootScope) {
-
+  .controller('MailCtrl', function ($scope, $modal, $log, $rootScope, $sce, User) {
+    $scope.size = {
+            height: "480",
+            width: "640"
+    }
+        $scope.volume = {level : 1.0};
     $scope.openModal = function(){
         $modal.open(
             {
@@ -11,6 +15,8 @@ angular.module('video2browserApp')
             }
         );
     }
+
+    $scope.contact = {};
 
     $scope.ok = function(){
         $log.debug("Surto de la funcio amb un ok");
@@ -22,16 +28,21 @@ angular.module('video2browserApp')
         $modal.dismiss('cancel');
     }
 
-    //$rootScope.$on("drop_user", function(event, message){
-    //    $log.debug("Detecto event d'enviament de missatge");
-    //    $log.debug(message);
-    //    $modal.open({
-    //        'templateUrl': 'views/modalInvite.html',
-    //        'controller' : 'ModalInviteCtrl',
-    //        'resolve' : {
-    //            'username': function() {return message}
-    //        }
-    //    })
-    //    $log.debug("___________")
-    //});
+    $scope.localStream = {}
+
+    var stream = {};
+        navigator.webkitGetUserMedia({video:true, audio: true}, function(streami){
+           $scope.localStream.url = window.URL.createObjectURL(streami);
+           $scope.contact = User.getContacts()[0];
+           $log.debug("contact selected: "+$scope.contact.username);
+           $scope.$apply();
+
+        }, null);
+
+    $scope.trustSrc = function(src) {
+        $log.info("stream: "+stream)
+        $log.info("entra al trustSrc de la funcio");
+        return $sce.trustAsResourceUrl(src);
+    };
+
   });

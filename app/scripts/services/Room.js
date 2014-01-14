@@ -77,7 +77,7 @@ angular.module('video2browserApp')
                             localStreamObject = localMediaStream;
                             localMediaStream.url= window.URL.createObjectURL(localMediaStream);
                             angular.copy(localMediaStream, localStream);
-                            $log.info(cb);
+
                             var joinMsg = {};
                             joinMsg.header      = "CALL";
                             joinMsg.method      = "CALL_JOIN"

@@ -161,3 +161,20 @@ table tbody tr:hover{
   position: absolute;
   height: 25%;
 }
+.video-top-bar{
+  width: inherit;
+  position: absolute;
+  color: white;
+  font-size: large;
+
+}
+.video-bottom-bar{
+  position: absolute;
+  margin-top: -45px;
+  width: inherit;
+}
+
+.video-height{
+  width: inherit;
+  height: inherit;
+}

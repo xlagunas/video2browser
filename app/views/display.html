@@ -1,0 +1,17 @@
+<div style="postion: relative;width:{{width}}px; height: {{height}}px">
+    <div ng-show="controlBar" class="video-top-bar text-center">
+            {{contact.name}} {{contact.middlename}} {{contact.surname}}
+            <button class="btn pull-right"><i class="fa fa-times"></i></button>
+    </div>
+    <video autoplay ng-src="{{trustSource(stream.url)}}" class="video-height" poster="http://localhost:8080/v2b/resources/img/{{contact.thumbnail}}"></video>
+    <div ng-show="controlBar" class="video-bottom-bar text-center">
+        <button class="btn"><i class="fa fa-comment"></i></button>
+        <button class="btn" ng-click="toggleAudio()"><i class="fa fa-volume-off"></i></button>
+        <button class="btn">
+            <i class="fa fa-circle"></i>
+            <i class="fa fa-circle"></i>
+            <i class="fa fa-circle"></i>
+        </button>
+    </div>
+</div>
+

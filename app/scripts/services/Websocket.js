@@ -6,7 +6,9 @@ angular.module('video2browserApp')
             'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling' ];
 
 //        var sock = new SockJS("http://localhost:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+//        var sock = new SockJS("http://192.168.10.145:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
         var sock = new SockJS("http://192.168.10.195:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+//        var sock = new SockJS("http://192.168.1.39:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
         var launchPeer = function(username){
             $log.debug("Entra al user "+username);
         }

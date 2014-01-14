@@ -25477,3 +25477,51 @@ table tbody tr:hover {
   position: absolute;
   height: 25%;
 }
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/Users\/xlagunas\/Desktop\/video2browser\/app\/styles\/main\.scss;
+  }
+
+  line {
+    font-family: \00003164;
+  }
+}
+
+.video-top-bar {
+  width: inherit;
+  position: absolute;
+  color: white;
+  font-size: large;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/Users\/xlagunas\/Desktop\/video2browser\/app\/styles\/main\.scss;
+  }
+
+  line {
+    font-family: \00003171;
+  }
+}
+
+.video-bottom-bar {
+  position: absolute;
+  margin-top: -45px;
+  width: inherit;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/Users\/xlagunas\/Desktop\/video2browser\/app\/styles\/main\.scss;
+  }
+
+  line {
+    font-family: \00003177;
+  }
+}
+
+.video-height {
+  width: inherit;
+  height: inherit;
+}

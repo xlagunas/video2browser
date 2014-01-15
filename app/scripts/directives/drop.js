@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .directive('droppable', function ($rootScope) {
+  .directive('drop', function ($rootScope) {
     return function (scope, element, attrs) {
         element.bind("drop", function(event){
             event.preventDefault();
@@ -10,5 +10,13 @@ angular.module('video2browserApp')
         element.bind("dragover", function(event){
             event.preventDefault();
         });
-      };
-  });
+
+        $rootScope.$on("dragstart", function(event, message){
+            element.removeClass("hide-border");
+        });
+
+        $rootScope.$on("dragend", function(event, message){
+            element.addClass("hide-border");
+        });
+    };
+});

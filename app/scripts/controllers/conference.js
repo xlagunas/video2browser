@@ -11,7 +11,7 @@ angular.module('video2browserApp')
         $scope.size = {width: 640/$scope.remoteStreams.length, height: 480/$scope.remoteStreams.length }
 
         $scope.getPeerContact = function(username){
-            $log.info("requesting contact info: "+username);
+//            $log.info("requesting contact info: "+username);
             return User.getContactByUsername(username);
         }
         $scope.close = function(){
@@ -43,7 +43,8 @@ angular.module('video2browserApp')
 
         Room.initMedia();
 
-        $rootScope.$on("drop_user", function(event, message){
+        $scope.$on("drop_user", function(event, message){
+            $log.info("detecto el drop");
             $modal.open({
                 'templateUrl': 'views/modalInvite.html',
                 'controller' : 'ModalInviteCtrl',

@@ -18,7 +18,7 @@
     <!--<video ng-repeat="stream in remoteStreams" ng-src="{{trustSrc(stream.url)}}" autosplay ></video>-->
 
     <display ng-repeat="stream in remoteStreams" width="{{640/remoteStreams.length}}" height={{480/remoteStreams.length}} contact="getPeerContact(stream.user)" stream="stream" menu></display>
-    <div droppable class="text-center" style="border-style: dashed; width: 100%; height: 200px">
+    <div drop class="text-center" style="border-style: dashed;width: 100%; height: 200px">
         <p>Drag here another user to make a multi-conference</p>
     </div>
 </div>

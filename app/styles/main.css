@@ -25525,3 +25525,18 @@ table tbody tr:hover {
   width: inherit;
   height: inherit;
 }
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/Users\/xlagunas\/Desktop\/video2browser\/app\/styles\/main\.scss;
+  }
+
+  line {
+    font-family: \00003182;
+  }
+}
+
+.hide-border {
+  display: none;
+  border-style: dashed;
+}

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('ModalInviteCtrl', function ($scope, $modal, $modalInstance, $log, username, Room, User, Websocket) {
+  .controller('ModalInviteCtrl', function ($scope, $modalInstance, $log, username, Room, User, Websocket) {
         $scope.contact = User.getContactByUsername(username);
         $scope.room = Room.getRoom();
 
@@ -17,12 +17,15 @@ angular.module('video2browserApp')
         msg.receiver        = $scope.contact.username
         $log.debug(msg);
         Websocket.send(msg);
-        $modalInstance.close($scope.contact);
+//        $modalInstance.close($scope.contact);
+        $modalInstance.close();
 
-        $modal.open({
-            'templateUrl': 'views/modalWaiting.html',
-            'controller' : 'ModalCallerCtrl'
-        })
+//        $modal.open({
+//            'templateUrl': 'views/modalWaiting.html',
+//            'controller' : 'ModalCallerCtrl'
+//        })
+
+
 //            .result.then(
 //            function(cb){
 //                return function(returnValue){

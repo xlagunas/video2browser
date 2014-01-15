@@ -15,7 +15,7 @@ angular.module('video2browserApp')
         sock.onopen = function(){console.log("obert desde angular");};
 
         sock.onmessage = function(e){
-//            console.log("message des d'angular: ",e.data);
+          console.log("message des d'angular: ",e.data);
             var msg = JSON.parse(e.data);
 
             switch(msg.header)

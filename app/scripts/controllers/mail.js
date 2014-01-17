@@ -45,4 +45,9 @@ angular.module('video2browserApp')
         return $sce.trustAsResourceUrl(src);
     };
 
+    $scope.$on("file_send", function(event, message){
+        $log.info("Rebo event file_send");
+        $log.info(message);
+    })
+
   });

@@ -6,8 +6,16 @@ angular.module('video2browserApp')
         $scope.localStream      = Room.getLocalStream();
         $scope.remoteStreams    = Room.getRemoteStreams();
         $scope.inviteUser;
+
         $scope.peers = Room.getPeers;
 
+        $scope.sendIt = function(){
+            $log.info($scope.rcv);
+            $log.info(Room.getPeers());
+            Room.getPeers()[0].dataChannel.send("hola");
+            $log.info("Hauria d'haver enviat");
+//            Root.getPeers()[0].dataChannel.send("hola");
+        }
         $scope.size = {width: 640/$scope.remoteStreams.length, height: 480/$scope.remoteStreams.length }
 
         $scope.getPeerContact = function(username){
@@ -53,4 +61,21 @@ angular.module('video2browserApp')
                 }
             })
         });
+
+        $scope.$on("file_send", function(event, message){
+            $log.info("Rebo event file_send");
+            $log.info(message);
+//          var a = document.createElement("a");
+//          a.download = message.file.name;
+//          a.href = message.data.result;
+//          $log.info(a);
+//          a.click();
+            var data = {};
+            data.type = "file";
+            data.message = message.data.slice(0, 1000);
+
+            Room.getPeers()[0].dataChannel.send(JSON.stringify(data));
+//            Room.getPeers()[0].dataChannel.send(JSON.stringify(message.data.result));
+
+        })
   });

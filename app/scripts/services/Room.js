@@ -43,7 +43,7 @@ angular.module('video2browserApp')
                     { optional:
                         [
                             {"DtlsSrtpKeyAgreement": true},
-                            {RtpDataChannels: false}
+                            {RtpDataChannels: true}
                         ]
                     });
                 peer.usernameId = username;
@@ -54,6 +54,41 @@ angular.module('video2browserApp')
                     window.URL = window.URL || window.webkitURL;
                     remoteStreams.push({'user': peer.usernameId, 'url': window.URL.createObjectURL(stream.stream)});
                 };
+
+                var channelData = peer.createDataChannel(username, {reliable: true});
+                channelData.onmessage = function(event){
+                    $log.info(event.data.message);
+                };
+
+                channelData.onopen = function (event) {
+                    channelData.send('RTCDataChannel opened.');
+                };
+
+                channelData.onclose = function (event) {
+                    console.log('RTCDataChannel closed.');
+                };
+
+                channelData.onerror = function (event) {
+                    console.error(event);
+                };
+
+                peer.ondatachannel = function (event) {
+                    console.log('peerConnection.ondatachannel event fired.');
+                    var rcvDataChannel = event.channel;
+                    rcvDataChannel.onmessage = function(event){
+                        $log.info(event.data.message);
+                    };
+                    rcvDataChannel.onopen = function(event){
+                        rcvDataChannel.send('RTCDataChannel opened back.');
+                    };
+                    rcvDataChannel.onerror = function (event) {
+                        console.error(event);
+                    };
+
+                    peer.dataChannel = rcvDataChannel;
+                };
+                peer.dataChannel = channelData;
+                $log.info(peer.dataChannel);
                 peerConnection.push(peer);
                 $rootScope.$apply();
 

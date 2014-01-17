@@ -7,15 +7,15 @@ angular.module('video2browserApp')
 
 //        var sock = new SockJS("http://localhost:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
 //        var sock = new SockJS("http://192.168.10.145:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
-        var sock = new SockJS("http://192.168.10.195:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
-//        var sock = new SockJS("http://192.168.1.39:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+//        var sock = new SockJS("http://192.168.10.195:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+        var sock = new SockJS("http://192.168.3.24:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
         var launchPeer = function(username){
             $log.debug("Entra al user "+username);
         }
         sock.onopen = function(){console.log("obert desde angular");};
 
         sock.onmessage = function(e){
-          console.log("message des d'angular: ",e.data);
+//          console.log("message des d'angular: ",e.data);
             var msg = JSON.parse(e.data);
 
             switch(msg.header)

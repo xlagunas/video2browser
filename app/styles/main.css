@@ -25538,5 +25538,19 @@ table tbody tr:hover {
 
 .hide-border {
   display: none;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/Users\/xlagunas\/Desktop\/video2browser\/app\/styles\/main\.scss;
+  }
+
+  line {
+    font-family: \00003186;
+  }
+}
+
+.show-border {
+  display: block !important;
   border-style: dashed;
 }

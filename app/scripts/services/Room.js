@@ -2,6 +2,7 @@
 
 angular.module('video2browserApp')
   .service('Room', function Room($log, $state, $rootScope, $modal, $modalStack) {
+        var fileArray = [];
         var servers = {
             "iceServers" : [
                 {'url' : 'stun:stun.l.google.com:19302'},
@@ -56,8 +57,26 @@ angular.module('video2browserApp')
                 };
 
                 var channelData = peer.createDataChannel(username, {reliable: true});
+
                 channelData.onmessage = function(event){
-                    $log.info(event.data.message);
+                    var msg = JSON.parse(event.data);
+                    $log.info(msg);
+
+                    if (msg.type === "file"){
+                        $log.info("Rebo un fitxer!");
+                        fileArray.push(msg.data);
+                        if (msg.complete){
+                            $log.info("Rebo el fitxer per complet");
+                            var a = document.createElement("a")
+                            a.href = fileArray.join('');;
+                            a.target = '_blank';
+                            a.download = msg.file;
+                            $log.info(a);
+                            var event = document.createEvent('Event');
+                            event.initEvent('click', true,true);
+                            a.dispatchEvent(event);
+                        }
+                    }
                 };
 
                 channelData.onopen = function (event) {
@@ -71,12 +90,32 @@ angular.module('video2browserApp')
                 channelData.onerror = function (event) {
                     console.error(event);
                 };
-
                 peer.ondatachannel = function (event) {
                     console.log('peerConnection.ondatachannel event fired.');
                     var rcvDataChannel = event.channel;
                     rcvDataChannel.onmessage = function(event){
-                        $log.info(event.data.message);
+                        var msg = JSON.parse(event.data);
+                        $log.info(msg);
+
+                        if (msg.type === "file"){
+                            $log.info("Rebo un fitxer!");
+                            fileArray.push(msg.data);
+                            if (msg.complete){
+                                $log.info("Rebo el fitxer per complet");
+                                var a = document.createElement("a")
+                                a.href = fileArray.join('');
+                                a.target = '_blank';
+
+                                a.download = msg.file;
+                                var event = document.createEvent('Event');
+                                $log.info(a);
+                                event.initEvent('click', true,true);
+                                a.dispatchEvent(event);
+                            }
+
+                        }
+                        else $log.info(msg);
+
                     };
                     rcvDataChannel.onopen = function(event){
                         rcvDataChannel.send('RTCDataChannel opened back.');

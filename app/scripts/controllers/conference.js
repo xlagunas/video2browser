@@ -64,18 +64,49 @@ angular.module('video2browserApp')
 
         $scope.$on("file_send", function(event, message){
             $log.info("Rebo event file_send");
-            $log.info(message);
-//          var a = document.createElement("a");
-//          a.download = message.file.name;
-//          a.href = message.data.result;
-//          $log.info(a);
-//          a.click();
-            var data = {};
-            data.type = "file";
-            data.message = message.data.slice(0, 1000);
+            message.type = "file";
 
-            Room.getPeers()[0].dataChannel.send(JSON.stringify(data));
-//            Room.getPeers()[0].dataChannel.send(JSON.stringify(message.data.result));
+            download(message.data, message.file.name);
 
-        })
+            //chunkify(message);
+
+
+        });
+
+        var chunkSize = 1000000;
+
+        function chunkify(data){
+            var send = {};
+            send.type = "file";
+            send.data = data.data;
+            send.file = data.file.name;
+
+            if (send.data.length < chunkSize){
+                send.complete = true;
+            }
+            else{
+                send.complete = false;
+                send.data = send.data.slice(0, chunkSize);
+
+            }
+            Room.getPeers()[0].dataChannel.send(JSON.stringify(send));
+            data.data = data.data.slice(chunkSize);
+
+            if (data.data.length){
+                setTimeout(function(){chunkify(data);}, 500);
+            }
+        }
+
+        function download(data, filename){
+            var a = document.createElement("a");
+            a.download = filename;
+            a.href = data;
+            a.target ="_blank";
+
+            var event = document.createEvent('Event');
+            event.initEvent('click', true,true);
+            a.dispatchEvent(event);
+            (window.URL || window.webkitURL).revokeObjectURL(a.href);
+
+        }
   });

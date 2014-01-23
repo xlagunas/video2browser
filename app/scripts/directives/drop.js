@@ -19,14 +19,16 @@ angular.module('video2browserApp')
                     };
                     reader.onload = (function(fileInfo){
                         return function(event){
-                            console.log(fileInfo);
-                            var dataURL = reader.result;
-                            console.log("file read: "+dataURL);
-                            console.log(reader.result);
-                            var sendObject = {};
-                            sendObject.file = fileInfo;
-                            sendObject.data = reader.result;
-                            scope.$emit("file_send", sendObject);
+                            if (reader.readyState == FileReader.DONE){
+                                console.log(fileInfo);
+                                var dataURL = reader.result;
+                                console.log("file read: "+dataURL);
+                                console.log(reader.result);
+                                var sendObject = {};
+                                sendObject.file = fileInfo;
+                                sendObject.data = dataURL;
+                                scope.$emit("file_send", sendObject)
+                            }
                         }
                     }(files[i]));
                 }

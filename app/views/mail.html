@@ -1,5 +1,6 @@
 <div class="container">
     <h3>Safata d'entrada</h3>
+    <video id="video"></video>
     <div class="col-md-5 input-group no-padding pull-right">
         <span class="input-group-addon"><i class="fa fa-search"></i></span>
         <input type="text" class="form-control" placeholder="Filtra per Emissor">
@@ -47,3 +48,26 @@
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+    var stream = {};
+    var reader = new FileReader();
+
+    var media = getUserMedia({audio:true, video:true}, function(streams){
+        stream = streams;
+        var audioNode = document.getElementById("video");
+        audioNode.src=w≤);
+        audioNode.play();
+
+        reader.readAsArrayBuffer(audioNode.src);
+    }, function(error){
+        console.log("Error al obtenir dades", +error);
+    });
+
+
+    reader.onload = function(e) {
+        console.log(e);
+        var arrayBuffer = reader.result;
+    }
+
+
+</script>

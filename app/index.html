@@ -26,53 +26,8 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <!--<div class="container" ui-view></div>-->
+    <div ui-view class="full-height row"></div>
 
-    <!--********************* COLLITA PROPIA  *********************************-->
-    <div class="row full-height" ng-controller="MainCtrl">
-        <div class="col-md-2 full-height">
-            <div class="row left-menu">
-                <ul class="list-unstyled">
-                    <li class="list-item text-center white-font"><a ui-sref="home"><h3></span> Vicon</h3></a></li>
-                    <li class="list-item white-font"><h4><i class="fa fa-envelope"></i> Messages</h4></li>
-                    <li class="list-sub-item white-font"><a ui-sref="mail"><span class=""><h5>Inbox</h5></span></a></li>
-                    <li class="list-sub-item white-font"><a href="#/mail/sent"><span><h5>Sent</h5></span></a></li>
-                    <li class="list-item white-font"><h4><i class="fa fa-calendar"></i></span> Events</h4></li>
-                    <li class="list-sub-item white-font"><a href="#"><span><h5>Today</h5></span></a></li>
-                    <li class="list-item white-font"><h4><i class="fa fa-user"></i></span> Contacts</h4></li>
-                    <li class="list-sub-item white-font"><a ui-sref="management"><span><h5>Configuration</h5></span></a></li>
-                </ul>
-            </div>
-            <!--<div class="row right-menu" ng-controller="contactCtrl">-->
-            <div class="row right-menu" ng-controller="NewUserCtrl">
-                <div class="row contact-header">
-                    <div class="col-lg-12">
-                        <div class="input-group lateral-margin" >
-                            <input type="text" ng-model="userTextBox.username" class="form-control" placeholder="Filter or add Users">
-                          <span class="input-group-btn">
-                            <!--<button class="btn btn-default" ng-disabled="(contacts|filter:userTextBox).length > 0 " type="button" ng-click="findCandidates(userTextBox.username)"><span class="glyphicon glyphicon-plus"></span></button>-->
-                            <button class="btn btn-default" ng-disabled="userTextBox.username.length < 3 " type="button" ng-click="findCandidates(userTextBox.username)"><span class="glyphicon glyphicon-plus"></span></button>
-                          </span>
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <ul class="list-unstyled contact-list">
-                    <contact user="contact" ng-repeat="contact in contacts| filter:userTextBox"/>
-                </ul>
-            </div>
-
-        </div>
-
-        <div class="col-md-10 full-height main-content no-padding">
-            <nav class="navbar navbar-default navbar-static-top fixed-size-navbar navbar-fixed-size" role="navigation">
-                <p class="navbar-text pull-right">Signed in as <a href="#/user/{{identity.username}}" class="navbar-link">{{identity.username}}</a></p>
-            </nav>
-
-            <div class="" ui-view></div>
-        </div>
-    </div>
-
-    <!--********************* /COLLITA PROPIA *********************************-->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -88,6 +43,9 @@
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/sockjs/sockjs.js"></script>
+    <script src="http://192.168.1.34:3000/socket.io/socket.io.js"></script>
+    <!--<script src="bower_components/socket.io-client/lib/socket.js"></script>-->
+
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -133,6 +91,7 @@
         <script src="scripts/services/User.js"></script>
         <script src="scripts/services/Websocket.js"></script>
         <script src="scripts/services/Room.js"></script>
+        <script src="scripts/controllers/login.js"></script>
         <!-- endbuild -->
         <script type=text/javascript>
             jQuery.event.props.push('dataTransfer');

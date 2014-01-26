@@ -1,9 +1,13 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('ManagementCtrl', function ($scope, $log, pending, User, $http) {
-        $log.debug(pending);
-        $scope.pending = pending.data;
+//  .controller('ManagementCtrl', function ($scope, $log, pending, User, $http) {
+  .controller('ManagementCtrl', function ($scope, $log, Websocket,User) {
+        Websocket.emit('pending requests', User.getIdentity(), function(pending){
+            console.log("callback cridat del pending contacts");
+            console.log(pending);
+            $scope.pending = pending;
+        })
 
         $scope.accept = function(friendship){
              friendship.status = "ACCEPTED";

@@ -6,8 +6,15 @@ angular.module('video2browserApp')
         var contacts = [];
         var relationships = [];
         var init = false;
+        var authenticated = false;
 
         return {
+             'setAuthentication': function(value){
+                 authenticated = value;
+             },
+             'getAuthentication': function(){
+                 return authenticated;
+             },
              'init': function(){
                  if (init === false){
                      $http({'method': 'GET', 'url': '../users'}).success(function(data){

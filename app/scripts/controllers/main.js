@@ -1,23 +1,29 @@
 'use strict';
 
 angular.module('video2browserApp')
-  .controller('MainCtrl', function ($scope, User, $state, $log, $window, $modal, $rootScope) {
-    User.init();
+  .controller('MainCtrl', function ($scope, User, $state, $log, Websocket) {
+//    User.init();
 
     $scope.identity = User.getIdentity();
     $scope.contacts = User.getContacts();
+    $log.info("Carrego el MainCtrl!");
 
     $scope.findCandidates = function(keyword){
         $log.info(keyword);
         $state.go("candidates", {'keyword':keyword});
     }
 
-    $scope.$on("myEvent", function(event, msg){
-        $log.debug("************rebo un msg via event");
-        $log.debug(msg);
-        $log.debug("************rebo un msg via event");
+    Websocket.on('duplicated session', function(data){
+        console.log("detected duplicated session!!");
+        console.log(data);
+    });
 
+    Websocket.on('roster', function(data){
+        $log.info('rebo informació roster!');
+        $log.info(data);
+
+        User.handleContacts(data);
     });
 
 
-    });
+  });

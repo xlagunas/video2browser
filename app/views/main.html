@@ -1,41 +1,38 @@
-<div class="row full-height">
-    <div class="col-md-2 full-height">
-        <div class="row left-menu">
-            <ul class="list-unstyled">
-                <li class="list-item text-center white-font"><h3></span> Vicon</h3></li>
-                <li class="list-item white-font"><h4><span class="glyphicon glyphicon-envelope"></span> Missatges</h4></li>
-                <li class="list-sub-item white-font"><a ui-sref="home.mail"><span class=""><h5>Entrada</h5></span></a></li>
-                <li class="list-sub-item white-font"><a href="#/mail/sent"><span><h5>Sortida</h5></span></a></li>
-                <li class="list-item white-font"><h4><span class="glyphicon glyphicon-calendar"></span> Events</h4></li>
-                <li class="list-sub-item white-font"><a href="#"><span><h5>Avui</h5></span></a></li>
-                <li class="list-item white-font"><h4><span class="glyphicon glyphicon-user"></span> Contactes</h4></li>
-                <li class="list-sub-item white-font"><a href="#"><span><h5>Gestió</h5></span></a></li>
-            </ul>
-        </div>
-        <!--<div class="row right-menu" ng-controller="contactCtrl">-->
-        <div class="row right-menu" ng-controller="NewUserCtrl">
-            <div class="row contact-header">
-                <div class="col-lg-12">
-                    <div class="input-group lateral-margin" >
-                        <input type="text" ng-model="userTextBox.username" class="form-control" placeholder="Filtra o Afegeix Usuaris">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" ng-disabled="(contacts|filter:userTextBox).length > 0 " type="button"><span class="glyphicon glyphicon-plus"></span></button>
-                          </span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-            </div>
-            <ul class="list-unstyled contact-list">
-
-                <contact ng-repeat="contact in contacts| filter:userTextBox" user="contact" ng-click="selectContact(contact)"></contact>
-            </ul>
-        </div>
-
+<div class="col-md-2 full-height">
+    <div class="row left-menu">
+        <ul class="list-unstyled">
+            <li class="list-item text-center white-font"><a ui-sref="home"><h3></span> Vicon</h3></a></li>
+            <li class="list-item white-font"><h4><i class="fa fa-envelope"></i> Messages</h4></li>
+            <li class="list-sub-item white-font"><a ui-sref="home.mail"><span class=""><h5>Inbox</h5></span></a></li>
+            <li class="list-sub-item white-font"><a href="#/mail/sent"><span><h5>Sent</h5></span></a></li>
+            <li class="list-item white-font"><h4><i class="fa fa-calendar"></i></span> Events</h4></li>
+            <li class="list-sub-item white-font"><a href="#"><span><h5>Today</h5></span></a></li>
+            <li class="list-item white-font"><h4><i class="fa fa-user"></i></span> Contacts</h4></li>
+            <li class="list-sub-item white-font"><a ui-sref="management"><span><h5>Configuration</h5></span></a></li>
+        </ul>
     </div>
-
-    <div class="col-md-10 full-height main-content no-padding" ng-controller="MainCtrl">
-        <nav class="navbar navbar-default navbar-static-top fixed-size-navbar navbar-fixed-size" role="navigation">
-            <p class="navbar-text pull-right">Signed in as <a href="#/contact/{{currentUser.username}}" class="navbar-link">{{identity.username}}</a></p><a href="../logout" class="btn btn-default">Log Out</a>
-        </nav>
-        <!--<div class="" ui-view></div>-->
+    <div class="row right-menu" ng-controller="NewUserCtrl">
+        <div class="row contact-header">
+            <div class="col-lg-12">
+                <div class="input-group lateral-margin" >
+                    <input type="text" ng-model="userTextBox.username" class="form-control" placeholder="Filter or add Users">
+                      <span class="input-group-btn">
+                        <!--<button class="btn btn-default" ng-disabled="(contacts|filter:userTextBox).length > 0 " type="button" ng-click="findCandidates(userTextBox.username)"><span class="glyphicon glyphicon-plus"></span></button>-->
+                        <button class="btn btn-default" ng-disabled="userTextBox.username.length < 3 " type="button" ng-click="findCandidates(userTextBox.username)"><span class="glyphicon glyphicon-plus"></span></button>
+                      </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div>
+        <ul class="list-unstyled contact-list">
+            <contact user="contact" ng-repeat="contact in contacts| filter:userTextBox"/>
+        </ul>
     </div>
+</div>
+<div class="col-md-10 full-height main-content no-padding">
+    <nav class="navbar navbar-default navbar-static-top fixed-size-navbar navbar-fixed-size" role="navigation">
+        <!--<p class="navbar-text pull-right">Signed in as <a href="#/user/{{identity.username}}" class="navbar-link">{{identity.username}}</a></p>-->
+        <p class="navbar-text pull-right">Signed in as <a ui-sref="home.user({username: identity.username})" class="navbar-link">{{identity.username}}</a></p>
+    </nav>
+
+    <div class="" ui-view></div>
 </div>

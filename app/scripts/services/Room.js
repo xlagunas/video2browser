@@ -2,6 +2,7 @@
 
 angular.module('video2browserApp')
   .service('Room', function Room($log, $state, $rootScope, $modal, $modalStack) {
+        var fileArray = [];
         var servers = {
             "iceServers" : [
                 {'url' : 'stun:stun.l.google.com:19302'},
@@ -15,7 +16,6 @@ angular.module('video2browserApp')
         var localStreamObject = {};
         var peerConnection = [];
         var remoteStreams = [];
-//        var conferenceService = {};
         var localStream = {};
         var userConstraints = {};
         var room = {};
@@ -44,7 +44,7 @@ angular.module('video2browserApp')
                     { optional:
                         [
                             {"DtlsSrtpKeyAgreement": true},
-                            {RtpDataChannels: false}
+                            {RtpDataChannels: true}
                         ]
                     });
                 peer.usernameId = username;
@@ -55,6 +55,79 @@ angular.module('video2browserApp')
                     window.URL = window.URL || window.webkitURL;
                     remoteStreams.push({'user': peer.usernameId, 'url': window.URL.createObjectURL(stream.stream)});
                 };
+
+                var channelData = peer.createDataChannel(username, {reliable: true});
+
+                channelData.onmessage = function(event){
+                    var msg = JSON.parse(event.data);
+                    $log.info(msg);
+
+                    if (msg.type === "file"){
+                        $log.info("Rebo un fitxer!");
+                        fileArray.push(msg.data);
+                        if (msg.complete){
+                            $log.info("Rebo el fitxer per complet");
+                            var a = document.createElement("a")
+                            a.href = fileArray.join('');;
+                            a.target = '_blank';
+                            a.download = msg.file;
+                            $log.info(a);
+                            var event = document.createEvent('Event');
+                            event.initEvent('click', true,true);
+                            a.dispatchEvent(event);
+                        }
+                    }
+                };
+
+                channelData.onopen = function (event) {
+                    channelData.send('RTCDataChannel opened.');
+                };
+
+                channelData.onclose = function (event) {
+                    console.log('RTCDataChannel closed.');
+                };
+
+                channelData.onerror = function (event) {
+                    console.error(event);
+                };
+                peer.ondatachannel = function (event) {
+                    console.log('peerConnection.ondatachannel event fired.');
+                    var rcvDataChannel = event.channel;
+                    rcvDataChannel.onmessage = function(event){
+                        var msg = JSON.parse(event.data);
+                        $log.info(msg);
+
+                        if (msg.type === "file"){
+                            $log.info("Rebo un fitxer!");
+                            fileArray.push(msg.data);
+                            if (msg.complete){
+                                $log.info("Rebo el fitxer per complet");
+                                var a = document.createElement("a")
+                                a.href = fileArray.join('');
+                                a.target = '_blank';
+
+                                a.download = msg.file;
+                                var event = document.createEvent('Event');
+                                $log.info(a);
+                                event.initEvent('click', true,true);
+                                a.dispatchEvent(event);
+                            }
+
+                        }
+                        else $log.info(msg);
+
+                    };
+                    rcvDataChannel.onopen = function(event){
+                        rcvDataChannel.send('RTCDataChannel opened back.');
+                    };
+                    rcvDataChannel.onerror = function (event) {
+                        console.error(event);
+                    };
+
+                    peer.dataChannel = rcvDataChannel;
+                };
+                peer.dataChannel = channelData;
+                $log.info(peer.dataChannel);
                 peerConnection.push(peer);
                 $rootScope.$apply();
 
@@ -69,15 +142,42 @@ angular.module('video2browserApp')
                 }
                 return undefined;
             },
-            'initMedia' : function(callback){
+            'initMedia' : function(){
+                $log.debug(userConstraints);
                 userMedia = getUserMedia(userConstraints,
                     function(localMediaStream){
-                        window.URL = window.URL || window.webkitURL;
-                        localStreamObject = localMediaStream;
-                        localMediaStream.url= window.URL.createObjectURL(localMediaStream);
-                        angular.copy(localMediaStream, localStream);
-                        callback();
+                        return function(cb){
+                            window.URL = window.URL || window.webkitURL;
+                            localStreamObject = localMediaStream;
+                            localMediaStream.url= window.URL.createObjectURL(localMediaStream);
+                            angular.copy(localMediaStream, localStream);
+
+                            var joinMsg = {};
+                            joinMsg.header      = "CALL";
+                            joinMsg.method      = "CALL_JOIN"
+                            joinMsg.content     = {};
+                            joinMsg.content.id  = room.id;
+                            $rootScope.$emit("send_WS",joinMsg);
+
+
                         $rootScope.$apply();
+                        }(Room)
+//                        window.URL = window.URL || window.webkitURL;
+//                        localStreamObject = localMediaStream;
+//                        localMediaStream.url= window.URL.createObjectURL(localMediaStream);
+//                        angular.copy(localMediaStream, localStream);
+//                        //cb();
+//                        $log.info(room);
+//                        var joinMsg = {};
+//                        joinMsg.header      = "CALL";
+//                        joinMsg.method      = "CALL_JOIN"
+//                        joinMsg.content     = {};
+//                        joinMsg.content.id  = room.id;
+//
+//                        $rootScope.$emit("send_WS",joinMsg);
+
+
+//                        $rootScope.$apply();
                     },
                     function(err){
                         console.log("initMedia error "+err);
@@ -134,9 +234,11 @@ angular.module('video2browserApp')
                         break;
                     case "CALL_ACCEPT":
                         $log.debug("Rebo un CALL_ACCEPT");
-                        $rootScope.$broadcast("close_popup", "");
-                        this.setRoom(msg.content);
-                        this.goToRoom();
+//                        if (msg.content.users == null){
+                            $rootScope.$broadcast("close_popup", "");
+                            this.setRoom(msg.content);
+                            this.goToRoom();
+//                        }
                         break;
                     case "CALL_REJECT":
                         $log.debug("Rebo un CALL_REJECT");
@@ -146,6 +248,7 @@ angular.module('video2browserApp')
                         $log.info("Entra al default del handleMessage");
                         break;
                 }
-            }
+            },
+            'getPeers': function(){ return peerConnection}
         }
     });

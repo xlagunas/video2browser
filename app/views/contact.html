@@ -1,0 +1,11 @@
+<li ng-click="selectContact(user)" drag>
+    <a ui-sref="user({username: user.username})">
+        <div class="media contact-card">
+            <img height="45px" class="pull-left media-object {{user.status | lowercase}}" src="/v2b/resources/img/default_avatar.png" alt="{{user.name}}">
+            <div class="media-body">
+                <h4 class="media-heading"></h4>
+                {{user.name}} {{user.middlename}}
+            </div>
+        </div>
+    </a>
+</li>

@@ -158,4 +158,31 @@ table tbody tr:hover{
 
 .localStream{
   border-radius: 25px;
+  position: absolute;
+  height: 25%;
+}
+.video-top-bar{
+  width: inherit;
+  position: absolute;
+  color: white;
+  font-size: large;
+
+}
+.video-bottom-bar{
+  position: absolute;
+  margin-top: -45px;
+  width: inherit;
+}
+
+.video-height{
+  width: inherit;
+  height: inherit;
+}
+
+.hide-border{
+  display: none;
+  //border-style: dashed;
+}
+.show-border{
+  border-style: dashed;
 }

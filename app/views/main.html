@@ -25,17 +25,8 @@
                 </div><!-- /.col-lg-6 -->
             </div>
             <ul class="list-unstyled contact-list">
-                <li ng-repeat="contact in contacts| filter:userTextBox" ng-click="selectContact(contact)">
-                    <a ui-sref="home.user({username: contact.username})">
-                        <div class="media contact-card">
-                            <img height="30px" class="pull-left media-object {{contact.status | lowercase}}" src="/v2b/resources/img/default_avatar.png" alt="{{contact.name}}">
-                            <div class="media-body">
-                                <h4 class="media-heading"></h4>
-                                {{contact.name}} {{contact.middlename}}
-                            </div>
-                        </div>
-                    </a>
-                </li>
+
+                <contact ng-repeat="contact in contacts| filter:userTextBox" user="contact" ng-click="selectContact(contact)"></contact>
             </ul>
         </div>
 

@@ -57,17 +57,7 @@
                     </div><!-- /.col-lg-6 -->
                 </div>
                 <ul class="list-unstyled contact-list">
-                    <li ng-repeat="contact in contacts| filter:userTextBox" ng-click="selectContact(contact)" draggable="true">
-                        <a ui-sref="user({username: contact.username})">
-                            <div class="media contact-card">
-                                <img height="45px" class="pull-left media-object {{contact.status | lowercase}}" src="/v2b/resources/img/default_avatar.png" alt="{{contact.name}}">
-                                <div class="media-body">
-                                    <h4 class="media-heading"></h4>
-                                    {{contact.name}} {{contact.middlename}}
-                                </div>
-                            </div>
-                        </a>
-                    </li>
+                    <contact user="contact" ng-repeat="contact in contacts| filter:userTextBox"/>
                 </ul>
             </div>
 
@@ -133,12 +123,19 @@
         <script src="scripts/controllers/user.js"></script>
         <script src="scripts/controllers/modalCallee.js"></script>
         <script src="scripts/controllers/modalCaller.js"></script>
+        <script src="scripts/controllers/modalInvite.js"></script>
         <script src="scripts/directives/capture.js"></script>
         <script src="scripts/directives/contact.js"></script>
+        <script src="scripts/directives/display.js"></script>
+        <script src="scripts/directives/drop.js"></script>
+        <script src="scripts/directives/drag.js"></script>
         <script src="scripts/filters/contactFilter.js"></script>
         <script src="scripts/services/User.js"></script>
         <script src="scripts/services/Websocket.js"></script>
         <script src="scripts/services/Room.js"></script>
         <!-- endbuild -->
+        <script type=text/javascript>
+            jQuery.event.props.push('dataTransfer');
+        </script>
 </body>
 </html>

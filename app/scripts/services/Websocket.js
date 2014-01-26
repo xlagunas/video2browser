@@ -5,12 +5,17 @@ angular.module('video2browserApp')
         var protocols = ['websocket', 'xdr-streaming', 'xhr-streaming', 'iframe-eventsource', 'iframe-htmlfile',
             'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling' ];
 
-        var sock = new SockJS("http://localhost:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
-
+//        var sock = new SockJS("http://localhost:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+//        var sock = new SockJS("http://192.168.10.145:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+//        var sock = new SockJS("http://192.168.10.195:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+        var sock = new SockJS("http://192.168.10.195:8080/v2b/socket/", undefined,  {protocols_whitelist: protocols, debug: true });
+        var launchPeer = function(username){
+            $log.debug("Entra al user "+username);
+        }
         sock.onopen = function(){console.log("obert desde angular");};
 
         sock.onmessage = function(e){
-            console.log("message des d'angular: ",e.data);
+//          console.log("message des d'angular: ",e.data);
             var msg = JSON.parse(e.data);
 
             switch(msg.header)
@@ -21,10 +26,13 @@ angular.module('video2browserApp')
                 case "CALL_ACK":
                     if (msg.method === "CALL_JOIN"){
                         $log.info("entra al call join")
+
                         if(msg.content.users != null){
+                            $log.info("Numero de contactes a la sala: "+msg.content.users.length);
                             for (var i=0;i<msg.content.users.length;i++){
                                 var user = msg.content.users[i];
                                 $log.debug("Entra al user "+user.username);
+
                                 Room.createNewPeer(user.username, function(username){
                                     return function(event){
                                         if (!event || !event.candidate) return;
@@ -36,11 +44,10 @@ angular.module('video2browserApp')
                                         msg.receiver = username;
                                         msg.sender = User.getIdentity().username;
                                         $log.info("Sending Ice Candidate to "+msg.receiver);
-//                                        $rootScope.$broadcast("WebSocketSend", msg);
-//                                        this.send(msg);
                                         sock.send(JSON.stringify(msg));
                                     }
                                 }(user.username));
+
                                 Room.findPeerByUsername(user.username).addStream(Room.getLocalStreamObject());
                                 Room.findPeerByUsername(user.username).createOffer(function(currentUser){
                                     return function(sessionDescription){
@@ -48,11 +55,11 @@ angular.module('video2browserApp')
                                         msg.header = "WEBRTC";
                                         msg.method = "WEBRTC_SEND_OFFER";
                                         msg.content = sessionDescription;
-                                        msg.receiver = user.username;
+                                        msg.receiver = currentUser;
                                         msg.sender = User.getIdentity().username;
                                         $log.info("Sending Session Description to "+msg.receiver);
                                         sock.send(JSON.stringify(msg));
-                                        Room.findPeerByUsername(user.username).setLocalDescription(sessionDescription);
+                                        Room.findPeerByUsername(currentUser).setLocalDescription(sessionDescription);
                                     }
                                 }(user.username), null,{'mandatory':
                                     {'OfferToReceiveAudio': Room.getUsersConstraints().audio,
@@ -138,10 +145,8 @@ angular.module('video2browserApp')
         }
 
         $rootScope.$on("send_WS", function(event, message){
-           $log.debug("Detecto event d'enviament de missatge");
-           $log.debug(message);
-           $log.debug("___________")
-            sock.send_msg(message);
+//           $log.debug(message);
+           sock.send_msg(message);
         });
 
         return {

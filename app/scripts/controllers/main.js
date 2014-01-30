@@ -6,11 +6,10 @@ angular.module('video2browserApp')
 
     $scope.identity = User.getIdentity();
     $scope.contacts = User.getContacts();
-    $log.info("Carrego el MainCtrl!");
 
     $scope.findCandidates = function(keyword){
         $log.info(keyword);
-        $state.go("candidates", {'keyword':keyword});
+        $state.go("home.candidates", {'keyword':keyword});
     }
 
     Websocket.on('duplicated session', function(data){

@@ -10,7 +10,7 @@ angular.module('video2browserApp', ['ui.router', 'ui.bootstrap'])
             .state('newUser', {'url':'/new-user',templateUrl: 'views/newUser.html', controller: 'NewUserCtrl'})
             .state('home.user', {'url':'/user/{username}',templateUrl: 'views/user.html', controller: 'UserCtrl'})
             .state('home.conference', {'url':'/conference/{roomId}',templateUrl: 'views/conference.html', controller: 'ConferenceCtrl'})
-            .state('management', {'url':'/management',templateUrl: 'views/management.html',
+            .state('home.management', {'url':'/management',templateUrl: 'views/management.html',
                 controller: 'ManagementCtrl'
 //                ,
 //                resolve: {
@@ -20,15 +20,7 @@ angular.module('video2browserApp', ['ui.router', 'ui.bootstrap'])
 //                        })
 //                    }}
             })
-            .state('candidates', {'url':'/candidates/{keyword}',templateUrl: 'views/candidates.html',
-                controller: 'CandidatesCtrl',
-                resolve: {
-                    candidates: function($http, User, $stateParams){
-                        return $http({'method': 'POST', 'url': '../users/search/'+$stateParams.keyword,
-                            'data': User.getIdentity()})
-                    }
-                }
-            });
+            .state('home.candidates', {'url':'/candidates/{keyword}',templateUrl: 'views/candidates.html', controller: 'CandidatesCtrl'});
 
 
         $urlRouterProvider.otherwise('/login');

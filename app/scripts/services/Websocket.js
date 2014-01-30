@@ -3,7 +3,7 @@
 angular.module('video2browserApp')
   .service('Websocket', function Websocket($log, User, $rootScope, Room) {
 
-        var socket = io.connect("http://192.168.1.34:3000")
+        var socket = io.connect("http://localhost:3000")
 
         return {
             on: function (eventName, callback) {

@@ -11,6 +11,18 @@ angular.module('video2browserApp')
 
     $scope.requestFriendship = function(contact){
         console.log(contact);
+
+        Websocket.emit('create request',
+            {   requester:
+                {
+                    username: User.getIdentity().username,
+                    _id: User.getIdentity()._id
+                },
+                requested: contact},
+            function(data){
+                console.log(data);
+            }
+        );
 //        $http({'method': 'PUT', 'url': '../relationships/create',
 //            'data':{'proposer': User.getIdentity(), 'contact': contact}})
 //            .success(function(data){
